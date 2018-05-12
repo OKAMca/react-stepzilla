@@ -244,15 +244,15 @@ export default class StepZilla extends Component {
       else if (this.isStepAtIndexHOCValidationBased(this.state.compState)) {
         // the user is using a higer order component (HOC) for validation (e.g react-validation-mixin), this wraps the StepZilla steps as a HOC,
         // so use hocValidationAppliedTo to determine if this step needs the aync validation as per react-validation-mixin interface
-        proceed = this.refs.activeComponent.refs.component.isValidated();
+        proceed = this.activeComponent.isValidated();
       }
-      else if (Object.keys(this.refs).length == 0 || typeof this.refs.activeComponent.isValidated == 'undefined') {
+      else if (!this.activeComponent || typeof this.activeComponent.isValidated === 'undefined') {
         // if its a form component, it should have implemeted a public isValidated class (also pure componenets wont even have refs - i.e. a empty object). If not then continue
         proceed = true;
       }
       else {
         // user is moving forward in steps, invoke validation as its available
-        proceed = this.refs.activeComponent.isValidated();
+        proceed = this.activeComponent.isValidated();
       }
     }
 
@@ -304,23 +304,27 @@ export default class StepZilla extends Component {
     const componentPointer = this.props.steps[this.state.compState].component;
 
     // can only update refs if its a regular React component (not a pure component), so lets check that
-    if (componentPointer instanceof Component || // unit test deteceted that instanceof Component can be in either of these locations so test both (not sure why this is the case)
-        (componentPointer.type && componentPointer.type.prototype instanceof Component)) {
-          cloneExtensions.ref = 'activeComponent';
+    if (componentPointer.type && componentPointer.type.prototype.render) {
+      cloneExtensions.ref = el => {
+        this.activeComponent = el;
+      };
     }
 
     compToRender = React.cloneElement(componentPointer, cloneExtensions);
 
     return (
       <div className="multi-step" onKeyDown={(evt) => {this.handleKeyDown(evt)}}>
+          {...this.props.progressTrackerSiblingBefore}
+
           {
               this.props.showSteps
-                  ? <ol className="progtrckr">
+              ? <ol className={"progtrckr" + (this.props.progressTrackerCls ? " " + this.props.progressTrackerCls : "")}>
                       {this.renderSteps()}
                   </ol>
               : <span></span>
           }
 
+          {...this.props.progressTrackerSiblingAfter}
           {compToRender}
         <div style={this.props.showNavigation ? {} : this.hidden} className="footer-buttons">
           <button
