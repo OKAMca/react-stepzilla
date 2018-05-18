@@ -7,11 +7,6 @@ ol.progtrckr li {
   display: inline-block;
   text-align: center;
   line-height: 4.5rem;
-  cursor: pointer;
-}
-
-ol.progtrckr li span {
-  padding: 0 1.5rem;
 }
 
 @media (max-width: 650px) {
@@ -32,65 +27,70 @@ ol.progtrckr li span {
 }
 
 ol.progtrckr li.progtrckr-todo {
-  color: silver;
-  border-bottom: 4px solid silver;
+  width: 150px;
 }
 
 ol.progtrckr li.progtrckr-doing {
-  color: black;
-  border-bottom: 4px solid #CCCCCC;
+  width: 150px;
 }
 
 ol.progtrckr li.progtrckr-done {
-  color: black;
-  border-bottom: 4px solid #5cb85c;
+  width: 150px;
 }
 
-ol.progtrckr li:after {
-  content: "\00a0\00a0";
-}
-
-ol.progtrckr li:before {
+ol.progtrckr li .progtrckr-inner {
+  width: 100%;
+  display: block;
   position: relative;
-  bottom: -3.7rem;
-  float: left;
+}
+
+ol.progtrckr li.first .progtrckr-inner {
+  width: 50%;
   left: 50%;
 }
 
-ol.progtrckr li.progtrckr-todo:before {
-  content: "\039F";
-  color: silver;
-  background-color: white;
-  width: 1.2em;
-  line-height: 1.4em;
+ol.progtrckr li.last .progtrckr-inner {
+  width: 50%;
 }
 
-ol.progtrckr li.progtrckr-todo:hover:before {
-  color: #ff4500;
+ol.progtrckr li.progtrckr-todo .progtrckr-inner {
+  border-bottom: 4px solid silver;
+}
+
+ol.progtrckr li.progtrckr-doing .progtrckr-inner {
+  border-bottom: 4px solid #eed087;
+}
+
+ol.progtrckr li.progtrckr-done .progtrckr-inner {
+  border-bottom: 4px solid #eed087;
+}
+
+/* ol.progtrckr li:after {
+  content: "\00a0\00a0";
+} */
+
+ol.progtrckr li:before {
+  position: relative;
+  top: 40px;
+  float: left;
+  left: 50%;
+  margin-left: -13px;
+}
+
+ol.progtrckr li.progtrckr-todo:before {
+  content: "\25CF";
+  color: silver;
+  font-size: 40px;
 }
 
 ol.progtrckr li.progtrckr-doing:before {
-  content: "\2022";
-  color: white;
-  background-color: #CCCCCC;
-  width: 1.2em;
-  line-height: 1.2em;
-  border-radius: 1.2em;
-}
-
-ol.progtrckr li.progtrckr-doing:hover:before {
-  color: #ff4500;
+  content: "\25CF";
+  color: #eed087;
+  font-size: 40px;
 }
 
 ol.progtrckr li.progtrckr-done:before {
-  content: "\2713";
-  color: white;
-  background-color: #5cb85c;
-  width: 1.2em;
-  line-height: 1.2em;
-  border-radius: 1.2em;
-}
-
-ol.progtrckr li.progtrckr-done:hover:before {
-  color: #333;
+  content: "\25CF";
+  color: #eed087;
+  font-size: 40px;
 }

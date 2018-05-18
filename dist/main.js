@@ -356,7 +356,7 @@ var StepZilla = function (_Component) {
       return this.props.steps.map(function (s, i) {
         return _react2.default.createElement(
           'li',
-          { className: _this5.getClassName("progtrckr", i), onClick: function onClick(evt) {
+          { className: _this5.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === _this5.props.steps.length ? " last" : ""), onClick: function onClick(evt) {
               _this5.jumpToStep(evt);
             }, key: i, value: i },
           _react2.default.createElement(
@@ -368,7 +368,8 @@ var StepZilla = function (_Component) {
             'span',
             null,
             _this5.props.steps[i].name
-          )
+          ),
+          _react2.default.createElement('span', { className: 'progtrckr-inner' })
         );
       });
     }

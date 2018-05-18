@@ -282,9 +282,10 @@ export default class StepZilla extends Component {
   // render the steps as stepsNavigation
   renderSteps() {
     return this.props.steps.map((s, i)=> (
-      <li className={this.getClassName("progtrckr", i)} onClick={(evt) => {this.jumpToStep(evt)}} key={i} value={i}>
-          <em>{i+1}</em>
-          <span>{this.props.steps[i].name}</span>
+      <li className={this.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === this.props.steps.length ? " last" : "")} onClick={(evt) => {this.jumpToStep(evt)}} key={i} value={i}>
+        <em>{i+1}</em>
+        <span>{this.props.steps[i].name}</span>
+        <span className="progtrckr-inner"></span>
       </li>
     ));
   }
