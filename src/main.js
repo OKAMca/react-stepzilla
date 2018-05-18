@@ -313,7 +313,7 @@ export default class StepZilla extends Component {
     compToRender = React.cloneElement(componentPointer, cloneExtensions);
 
     return (
-      <div className={"multi-step" + (this.props.multiStepCls ? " " + this.props.multiStepCls : "")} onKeyDown={(evt) => {this.handleKeyDown(evt)}}>
+      <div className="multi-step" onKeyDown={(evt) => {this.handleKeyDown(evt)}}>
           {...this.props.progressTrackerSiblingBefore}
 
           {
