@@ -307,7 +307,7 @@ export default class StepZilla extends Component {
     // can only update refs if its a regular React component (not a pure component), so lets check that
     if (componentPointer.type && componentPointer.type.prototype.render) {
       cloneExtensions.ref = el => {
-        this.activeComponent = el;
+        if (el) this.activeComponent = el;
       };
     }
 
