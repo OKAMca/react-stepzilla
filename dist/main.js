@@ -397,7 +397,7 @@ var StepZilla = function (_Component) {
       // can only update refs if its a regular React component (not a pure component), so lets check that
       if (componentPointer.type && componentPointer.type.prototype.render) {
         cloneExtensions.ref = function (el) {
-          _this6.activeComponent = el;
+          if (el) _this6.activeComponent = el;
         };
       }
 
