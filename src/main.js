@@ -13,7 +13,7 @@ export default class StepZilla extends Component {
     };
 
     this.hidden = {
-      display: 'none'
+      display: 'none!important'
     };
 
     // if user did not give a custom nextTextOnFinalActionStep, the nextButtonText becomes the default
