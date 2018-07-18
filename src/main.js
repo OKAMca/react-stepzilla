@@ -12,9 +12,7 @@ export default class StepZilla extends Component {
       navState: this.getNavStates(this.props.startAtStep, this.props.steps.length),
     };
 
-    this.hidden = {
-      display: 'none!important'
-    };
+    this.hiddenCls = 'hidden';
 
     // if user did not give a custom nextTextOnFinalActionStep, the nextButtonText becomes the default
     this.nextTextOnFinalActionStep = (this.props.nextTextOnFinalActionStep) ? this.props.nextTextOnFinalActionStep : this.props.nextButtonText;
@@ -327,18 +325,16 @@ export default class StepZilla extends Component {
 
           {...this.props.progressTrackerSiblingAfter}
           {compToRender}
-        <div style={this.props.showNavigation ? {} : this.hidden} className="footer-buttons">
+        <div className={"footer-buttons" + (!this.props.showNavigation ? " " + this.hiddenCls : "")}>
           <button
-            style={this.state.showPreviousBtn ? {} : this.hidden}
-            className={props.backButtonCls}
+            className={props.backButtonCls + (!this.state.showPreviousBtn ? " " + this.hiddenCls : "")}
             onClick={() => {this.previous()}}
             id="prev-button"
           >
             {this.props.backButtonText}
           </button>
           <button
-            style={this.state.showNextBtn ? {} : this.hidden}
-            className={props.nextButtonCls}
+            className={props.nextButtonCls + (!this.state.showNextBtn ? " " + this.hiddenCls : "")}
             onClick={() => {this.next()}}
             id="next-button"
           >

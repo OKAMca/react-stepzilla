@@ -41,9 +41,7 @@ var StepZilla = function (_Component) {
       navState: _this.getNavStates(_this.props.startAtStep, _this.props.steps.length)
     });
 
-    _this.hidden = {
-      display: 'none!important'
-    };
+    _this.hiddenCls = 'hidden';
 
     // if user did not give a custom nextTextOnFinalActionStep, the nextButtonText becomes the default
     _this.nextTextOnFinalActionStep = _this.props.nextTextOnFinalActionStep ? _this.props.nextTextOnFinalActionStep : _this.props.nextButtonText;
@@ -418,12 +416,11 @@ var StepZilla = function (_Component) {
         compToRender,
         _react2.default.createElement(
           'div',
-          { style: this.props.showNavigation ? {} : this.hidden, className: 'footer-buttons' },
+          { className: "footer-buttons" + (!this.props.showNavigation ? " " + this.hiddenCls : "") },
           _react2.default.createElement(
             'button',
             {
-              style: this.state.showPreviousBtn ? {} : this.hidden,
-              className: props.backButtonCls,
+              className: props.backButtonCls + (!this.state.showPreviousBtn ? " " + this.hiddenCls : ""),
               onClick: function onClick() {
                 _this6.previous();
               },
@@ -434,8 +431,7 @@ var StepZilla = function (_Component) {
           _react2.default.createElement(
             'button',
             {
-              style: this.state.showNextBtn ? {} : this.hidden,
-              className: props.nextButtonCls,
+              className: props.nextButtonCls + (!this.state.showNextBtn ? " " + this.hiddenCls : ""),
               onClick: function onClick() {
                 _this6.next();
               },

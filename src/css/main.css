@@ -94,3 +94,7 @@ ol.progtrckr li.progtrckr-done:before {
   color: #eed087;
   font-size: 40px;
 }
+
+.hidden {
+  display: none!important;
+}
