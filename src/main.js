@@ -297,6 +297,12 @@ export default class StepZilla extends Component {
     let cloneExtensions = {
       jumpToStep: (t) => {
         this.jumpToStep(t);
+      },
+      next: (t) => {
+        this.next(t);
+      },
+      previous: (t) => {
+        this.previous(t);
       }
     };
 
@@ -335,7 +341,10 @@ export default class StepZilla extends Component {
           </button>
           <button
             className={props.nextButtonCls + (!this.state.showNextBtn ? " " + this.hiddenCls : "")}
-            onClick={() => {this.next()}}
+            onClick={() => {
+              if (this.state.navState.current === 0 && !this.props.isReady) return;
+              this.next();
+            }}
             id="next-button"
           >
             {this.state.nextStepText}
@@ -358,7 +367,8 @@ StepZilla.defaultProps = {
   nextButtonCls: "btn btn-prev btn-primary btn-lg pull-right",
   backButtonText: "Previous",
   backButtonCls: "btn btn-next btn-primary btn-lg pull-left",
-  hocValidationAppliedTo: []
+  hocValidationAppliedTo: [],
+  isReady: true
 };
 
 StepZilla.propTypes = {
@@ -378,5 +388,6 @@ StepZilla.propTypes = {
   backButtonCls: PropTypes.string,
   backButtonText: PropTypes.string,
   hocValidationAppliedTo: PropTypes.array,
-  onStepChange: PropTypes.func
+  onStepChange: PropTypes.func,
+  isReady: PropTypes.bool
 }

@@ -387,6 +387,12 @@ var StepZilla = function (_Component) {
       var cloneExtensions = {
         jumpToStep: function jumpToStep(t) {
           _this6.jumpToStep(t);
+        },
+        next: function next(t) {
+          _this6.next(t);
+        },
+        previous: function previous(t) {
+          _this6.previous(t);
         }
       };
 
@@ -433,6 +439,7 @@ var StepZilla = function (_Component) {
             {
               className: props.nextButtonCls + (!this.state.showNextBtn ? " " + this.hiddenCls : ""),
               onClick: function onClick() {
+                if (_this6.state.navState.current === 0 && !_this6.props.isReady) return;
                 _this6.next();
               },
               id: 'next-button'
@@ -462,7 +469,8 @@ StepZilla.defaultProps = {
   nextButtonCls: "btn btn-prev btn-primary btn-lg pull-right",
   backButtonText: "Previous",
   backButtonCls: "btn btn-next btn-primary btn-lg pull-left",
-  hocValidationAppliedTo: []
+  hocValidationAppliedTo: [],
+  isReady: true
 };
 
 StepZilla.propTypes = {
@@ -482,5 +490,6 @@ StepZilla.propTypes = {
   backButtonCls: _propTypes2.default.string,
   backButtonText: _propTypes2.default.string,
   hocValidationAppliedTo: _propTypes2.default.array,
-  onStepChange: _propTypes2.default.func
+  onStepChange: _propTypes2.default.func,
+  isReady: _propTypes2.default.bool
 };
