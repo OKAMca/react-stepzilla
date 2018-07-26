@@ -135,6 +135,8 @@ export default class StepZilla extends Component {
       evt.persist(); // evt is a react event so we need to persist it as we deal with aync promises which nullifies these events (https://facebook.github.io/react/docs/events.html#event-pooling)
 
       const movingBack = evt.target.value < this.state.compState; // are we trying to move back or front?
+      if (!movingBack) return; // prevent moving forward using step counter
+
       let passThroughStepsNotValid = false; // if we are jumping forward, only allow that if inbetween steps are all validated. This flag informs the logic...
       let proceed = false; // flag on if we should move on
 
@@ -280,7 +282,7 @@ export default class StepZilla extends Component {
   // render the steps as stepsNavigation
   renderSteps() {
     return this.props.steps.map((s, i)=> (
-      <li className={this.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === this.props.steps.length ? " last" : "")} onClick={(evt) => {this.jumpToStep(evt)}} key={i} value={i}>
+      <li className={this.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === this.props.steps.length ? " last" : "")} onClick={(evt) => {this.jumpToStep(evt)}} key={i} value={i} style={{cursor: i < this.state.navState.current ? 'pointer' : 'default'}}>
         <em>{i+1}</em>
         <span>{this.props.steps[i].name}</span>
         <span className="progtrckr-inner"></span>
