@@ -168,7 +168,6 @@ var StepZilla = function (_Component) {
     value: function jumpToStep(evt) {
       var _this3 = this;
 
-      console.log(evt.target, this.props.stepsNavigation, evt.target.value, this.state.compState);
       if (evt.target == undefined) {
         // a child step wants to invoke a jump between steps. in this case 'evt' is the numeric step number and not the JS event
         this.setNavState(evt);
@@ -185,9 +184,6 @@ var StepZilla = function (_Component) {
         evt.persist(); // evt is a react event so we need to persist it as we deal with aync promises which nullifies these events (https://facebook.github.io/react/docs/events.html#event-pooling)
 
         var movingBack = evt.target.value < this.state.compState; // are we trying to move back or front?
-        console.log('movingBack', movingBack);
-        if (!movingBack) return;
-
         var passThroughStepsNotValid = false; // if we are jumping forward, only allow that if inbetween steps are all validated. This flag informs the logic...
         var proceed = false; // flag on if we should move on
 
@@ -355,13 +351,12 @@ var StepZilla = function (_Component) {
     value: function renderSteps() {
       var _this5 = this;
 
-      console.log('this', this);
       return this.props.steps.map(function (s, i) {
         return _react2.default.createElement(
           'li',
           { className: _this5.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === _this5.props.steps.length ? " last" : ""), onClick: function onClick(evt) {
               _this5.jumpToStep(evt);
-            }, key: i, value: i, style: { cursor: i < _this5.state.navState.current ? 'pointer' : 'default' } },
+            }, key: i, value: i },
           _react2.default.createElement(
             'em',
             null,
