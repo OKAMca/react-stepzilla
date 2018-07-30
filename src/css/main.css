@@ -71,7 +71,7 @@ ol.progtrckr li.progtrckr-done .progtrckr-inner {
 
 ol.progtrckr li:before {
   position: relative;
-  top: 40px;
+  top: 50px;
   float: left;
   left: 50%;
   margin-left: -13px;
