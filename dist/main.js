@@ -353,12 +353,25 @@ var StepZilla = function (_Component) {
     value: function renderSteps() {
       var _this5 = this;
 
+      console.log('props', this.props);
+
+      var isDisabled = function isDisabled(i) {
+        return _this5.props.disabledSteps.includes(i);
+      };
+
       return this.props.steps.map(function (s, i) {
         return _react2.default.createElement(
           'li',
-          { className: _this5.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === _this5.props.steps.length ? " last" : ""), onClick: function onClick(evt) {
+          {
+            className: _this5.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === _this5.props.steps.length ? " last" : ""),
+            onClick: function onClick(evt) {
+              if (isDisabled(i)) return;
               _this5.jumpToStep(evt);
-            }, key: i, value: i, style: { cursor: i < _this5.state.navState.current ? 'pointer' : 'default' } },
+            },
+            key: i,
+            value: i,
+            style: { cursor: i < _this5.state.navState.current && !isDisabled(i) ? "pointer" : "default" }
+          },
           _react2.default.createElement(
             'em',
             null,
@@ -366,7 +379,7 @@ var StepZilla = function (_Component) {
           ),
           _react2.default.createElement(
             'span',
-            null,
+            { className: isDisabled(i) ? "text-muted" : "" },
             _this5.props.steps[i].name
           ),
           _react2.default.createElement('span', { className: 'progtrckr-inner' })
@@ -472,7 +485,8 @@ StepZilla.defaultProps = {
   backButtonText: "Previous",
   backButtonCls: "btn btn-next btn-primary btn-lg pull-left",
   hocValidationAppliedTo: [],
-  isReady: true
+  isReady: true,
+  disabledSteps: []
 };
 
 StepZilla.propTypes = {
@@ -493,5 +507,6 @@ StepZilla.propTypes = {
   backButtonText: _propTypes2.default.string,
   hocValidationAppliedTo: _propTypes2.default.array,
   onStepChange: _propTypes2.default.func,
-  isReady: _propTypes2.default.bool
+  isReady: _propTypes2.default.bool,
+  disabledSteps: _propTypes2.default.array
 };

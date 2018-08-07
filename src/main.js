@@ -280,11 +280,22 @@ export default class StepZilla extends Component {
   }
 
   // render the steps as stepsNavigation
-  renderSteps() {
+  renderSteps() {    
+    const isDisabled = i => this.props.disabledSteps.includes(i);
+
     return this.props.steps.map((s, i)=> (
-      <li className={this.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === this.props.steps.length ? " last" : "")} onClick={(evt) => {this.jumpToStep(evt)}} key={i} value={i} style={{cursor: i < this.state.navState.current ? 'pointer' : 'default'}}>
+      <li
+        className={this.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === this.props.steps.length ? " last" : "")}
+        onClick={evt => {
+          if (isDisabled(i)) return;
+          this.jumpToStep(evt);
+        }}
+        key={i}
+        value={i}
+        style={{cursor: i < this.state.navState.current && !isDisabled(i) ? "pointer" : "default"}}
+      >
         <em>{i+1}</em>
-        <span>{this.props.steps[i].name}</span>
+        <span className={isDisabled(i) ? "text-muted" : ""}>{this.props.steps[i].name}</span>
         <span className="progtrckr-inner"></span>
       </li>
     ));
@@ -370,7 +381,8 @@ StepZilla.defaultProps = {
   backButtonText: "Previous",
   backButtonCls: "btn btn-next btn-primary btn-lg pull-left",
   hocValidationAppliedTo: [],
-  isReady: true
+  isReady: true,
+  disabledSteps: []
 };
 
 StepZilla.propTypes = {
@@ -391,5 +403,6 @@ StepZilla.propTypes = {
   backButtonText: PropTypes.string,
   hocValidationAppliedTo: PropTypes.array,
   onStepChange: PropTypes.func,
-  isReady: PropTypes.bool
+  isReady: PropTypes.bool,
+  disabledSteps: PropTypes.array
 }
