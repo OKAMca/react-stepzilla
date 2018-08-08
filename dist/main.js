@@ -353,8 +353,6 @@ var StepZilla = function (_Component) {
     value: function renderSteps() {
       var _this5 = this;
 
-      console.log('props', this.props);
-
       var isDisabled = function isDisabled(i) {
         return _this5.props.disabledSteps.includes(i);
       };
