@@ -126,8 +126,12 @@ var StepZilla = function (_Component) {
   }, {
     key: 'checkNavState',
     value: function checkNavState(nextStep) {
+      var _this3 = this;
+
       if (this.props.onStepChange) {
-        this.props.onStepChange(nextStep);
+        return _promise2.default.resolve(this.props.onStepChange(nextStep)).then(function () {
+          _this3.setState(_this3.getPrevNextBtnState(nextStep));
+        });
       }
 
       this.setState(this.getPrevNextBtnState(nextStep));
@@ -166,7 +170,7 @@ var StepZilla = function (_Component) {
   }, {
     key: 'jumpToStep',
     value: function jumpToStep(evt) {
-      var _this3 = this;
+      var _this4 = this;
 
       if (evt.target == undefined) {
         // a child step wants to invoke a jump between steps. in this case 'evt' is the numeric step number and not the JS event
@@ -195,14 +199,14 @@ var StepZilla = function (_Component) {
           proceed = valid;
 
           if (!movingBack) {
-            _this3.updateStepValidationFlag(proceed);
+            _this4.updateStepValidationFlag(proceed);
           }
 
           if (proceed) {
             if (!movingBack) {
               // looks like we are moving forward, 'reduce' a new array of step>validated values we need to check and 'some' that to get a decision on if we should allow moving forward
-              passThroughStepsNotValid = _this3.props.steps.reduce(function (a, c, i) {
-                if (i >= _this3.state.compState && i < evt.target.value) {
+              passThroughStepsNotValid = _this4.props.steps.reduce(function (a, c, i) {
+                if (i >= _this4.state.compState && i < evt.target.value) {
                   a.push(c.validated);
                 }
                 return a;
@@ -214,15 +218,15 @@ var StepZilla = function (_Component) {
         }).catch(function (e) {
           // Promise based validation was a fail (i.e reject())
           if (!movingBack) {
-            _this3.updateStepValidationFlag(false);
+            _this4.updateStepValidationFlag(false);
           }
         }).then(function () {
           // this is like finally(), executes if error no no error
           if (proceed && !passThroughStepsNotValid) {
-            if (evt.target.value === _this3.props.steps.length - 1 && _this3.state.compState === _this3.props.steps.length - 1) {
-              _this3.setNavState(_this3.props.steps.length);
+            if (evt.target.value === _this4.props.steps.length - 1 && _this4.state.compState === _this4.props.steps.length - 1) {
+              _this4.setNavState(_this4.props.steps.length);
             } else {
-              _this3.setNavState(evt.target.value);
+              _this4.setNavState(evt.target.value);
             }
           }
         }).catch(function (e) {
@@ -242,16 +246,16 @@ var StepZilla = function (_Component) {
   }, {
     key: 'next',
     value: function next() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.abstractStepMoveAllowedToPromise().then(function () {
         var proceed = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
         // validation was a success (promise or sync validation). In it was a Promise's resolve() then proceed will be undefined, so make it true. Or else 'proceed' will carry the true/false value from sync validation
-        _this4.updateStepValidationFlag(proceed);
+        _this5.updateStepValidationFlag(proceed);
 
         if (proceed) {
-          _this4.setNavState(_this4.state.compState + 1);
+          _this5.setNavState(_this5.state.compState + 1);
         }
       }).catch(function (e) {
         if (e) {
@@ -265,7 +269,7 @@ var StepZilla = function (_Component) {
         }
 
         // Promise based validation was a fail (i.e reject())
-        _this4.updateStepValidationFlag(false);
+        _this5.updateStepValidationFlag(false);
       });
     }
 
@@ -351,24 +355,24 @@ var StepZilla = function (_Component) {
   }, {
     key: 'renderSteps',
     value: function renderSteps() {
-      var _this5 = this;
+      var _this6 = this;
 
       var isDisabled = function isDisabled(i) {
-        return _this5.props.disabledSteps.includes(i);
+        return _this6.props.disabledSteps.includes(i);
       };
 
       return this.props.steps.map(function (s, i) {
         return _react2.default.createElement(
           'li',
           {
-            className: _this5.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === _this5.props.steps.length ? " last" : ""),
+            className: _this6.getClassName("progtrckr", i) + (i === 0 ? " first" : "") + (i + 1 === _this6.props.steps.length ? " last" : ""),
             onClick: function onClick(evt) {
               if (isDisabled(i)) return;
-              _this5.jumpToStep(evt);
+              _this6.jumpToStep(evt);
             },
             key: i,
             value: i,
-            style: { cursor: i < _this5.state.navState.current && !isDisabled(i) ? "pointer" : "default" }
+            style: { cursor: i < _this6.state.navState.current && !isDisabled(i) ? "pointer" : "default" }
           },
           _react2.default.createElement(
             'em',
@@ -378,7 +382,7 @@ var StepZilla = function (_Component) {
           _react2.default.createElement(
             'span',
             { className: isDisabled(i) ? "text-muted" : "" },
-            _this5.props.steps[i].name
+            _this6.props.steps[i].name
           ),
           _react2.default.createElement('span', { className: 'progtrckr-inner' })
         );
@@ -390,7 +394,7 @@ var StepZilla = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-      var _this6 = this;
+      var _this7 = this;
 
       var props = this.props;
 
@@ -399,13 +403,13 @@ var StepZilla = function (_Component) {
       // clone the step component dynamically and tag it as activeComponent so we can validate it on next. also bind the jumpToStep piping method
       var cloneExtensions = {
         jumpToStep: function jumpToStep(t) {
-          _this6.jumpToStep(t);
+          _this7.jumpToStep(t);
         },
         next: function next(t) {
-          _this6.next(t);
+          _this7.next(t);
         },
         previous: function previous(t) {
-          _this6.previous(t);
+          _this7.previous(t);
         }
       };
 
@@ -414,7 +418,7 @@ var StepZilla = function (_Component) {
       // can only update refs if its a regular React component (not a pure component), so lets check that
       if (componentPointer.type && componentPointer.type.prototype.render) {
         cloneExtensions.ref = function (el) {
-          if (el) _this6.activeComponent = el;
+          if (el) _this7.activeComponent = el;
         };
       }
 
@@ -423,7 +427,7 @@ var StepZilla = function (_Component) {
       return _react2.default.createElement(
         'div',
         { className: 'multi-step', onKeyDown: function onKeyDown(evt) {
-            _this6.handleKeyDown(evt);
+            _this7.handleKeyDown(evt);
           } },
         {...this.props.progressTrackerSiblingBefore},
         this.props.showSteps ? _react2.default.createElement(
@@ -441,7 +445,7 @@ var StepZilla = function (_Component) {
             {
               className: props.backButtonCls + (!this.state.showPreviousBtn ? " " + this.hiddenCls : ""),
               onClick: function onClick() {
-                _this6.previous();
+                _this7.previous();
               },
               id: 'prev-button'
             },
@@ -452,8 +456,8 @@ var StepZilla = function (_Component) {
             {
               className: props.nextButtonCls + (!this.state.showNextBtn ? " " + this.hiddenCls : ""),
               onClick: function onClick() {
-                if (_this6.state.navState.current === 0 && !_this6.props.isReady) return;
-                _this6.next();
+                if (_this7.state.navState.current === 0 && !_this7.props.isReady) return;
+                _this7.next();
               },
               id: 'next-button'
             },

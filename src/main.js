@@ -89,7 +89,9 @@ export default class StepZilla extends Component {
   // which step are we in?
   checkNavState(nextStep) {
     if (this.props.onStepChange) {
-      this.props.onStepChange(nextStep);
+      return Promise.resolve(this.props.onStepChange(nextStep)).then(() => {
+        this.setState(this.getPrevNextBtnState(nextStep));
+      });
     }
 
     this.setState(this.getPrevNextBtnState(nextStep));
