@@ -111,10 +111,10 @@ export default class StepZilla extends Component {
   // handles keydown on enter being pressed in any Child component input area. in this case it goes to the next (ignore textareas as they should allow line breaks)
   handleKeyDown(evt) {
     if (evt.which === 13) {
-      if (!this.props.preventEnterSubmission && evt.target.type !== 'textarea') {
+      if (!this.props.preventEnterSubmission && evt.target.type !== 'textarea' && evt.target.type !== 'search') {
         this.next();
       }
-      else if (evt.target.type !== 'textarea') {
+      else if (evt.target.type !== 'textarea' && evt.target.type !== 'search') {
         evt.preventDefault();
       }
     }

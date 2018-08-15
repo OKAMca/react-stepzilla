@@ -157,9 +157,9 @@ var StepZilla = function (_Component) {
     key: 'handleKeyDown',
     value: function handleKeyDown(evt) {
       if (evt.which === 13) {
-        if (!this.props.preventEnterSubmission && evt.target.type !== 'textarea') {
+        if (!this.props.preventEnterSubmission && evt.target.type !== 'textarea' && evt.target.type !== 'search') {
           this.next();
-        } else if (evt.target.type !== 'textarea') {
+        } else if (evt.target.type !== 'textarea' && evt.target.type !== 'search') {
           evt.preventDefault();
         }
       }
