@@ -334,7 +334,7 @@ export default class StepZilla extends Component {
 
     return (
       <div className="multi-step" onKeyDown={(evt) => {this.handleKeyDown(evt)}}>
-          {...this.props.progressTrackerSiblingBefore}
+          {this.props.progressTrackerSiblingBefore}
 
           {
               this.props.showSteps
@@ -344,7 +344,7 @@ export default class StepZilla extends Component {
               : <span></span>
           }
 
-          {...this.props.progressTrackerSiblingAfter}
+          {this.props.progressTrackerSiblingAfter}
           {compToRender}
         <div className={"footer-buttons" + (!this.props.showNavigation ? " " + this.hiddenCls : "")}>
           <button

@@ -429,13 +429,13 @@ var StepZilla = function (_Component) {
         { className: 'multi-step', onKeyDown: function onKeyDown(evt) {
             _this7.handleKeyDown(evt);
           } },
-        {...this.props.progressTrackerSiblingBefore},
+        this.props.progressTrackerSiblingBefore,
         this.props.showSteps ? _react2.default.createElement(
           'ol',
           { className: "progtrckr" + (this.props.progressTrackerCls ? " " + this.props.progressTrackerCls : "") },
           this.renderSteps()
         ) : _react2.default.createElement('span', null),
-        {...this.props.progressTrackerSiblingAfter},
+        this.props.progressTrackerSiblingAfter,
         compToRender,
         _react2.default.createElement(
           'div',
