@@ -172,12 +172,12 @@ var StepZilla = function (_Component) {
     value: function jumpToStep(evt) {
       var _this4 = this;
 
-      if (evt.target == undefined) {
+      if (evt.currentTarget == undefined) {
         // a child step wants to invoke a jump between steps. in this case 'evt' is the numeric step number and not the JS event
         this.setNavState(evt);
       } else {
         // the main navigation step ui is invoking a jump between steps
-        if (!this.props.stepsNavigation || evt.target.value === this.state.compState) {
+        if (!this.props.stepsNavigation || evt.currentTarget.value === this.state.compState) {
           // if stepsNavigation is turned off or user clicked on existing step again (on step 2 and clicked on 2 again) then ignore
           evt.preventDefault();
           evt.stopPropagation();
@@ -187,7 +187,7 @@ var StepZilla = function (_Component) {
 
         evt.persist(); // evt is a react event so we need to persist it as we deal with aync promises which nullifies these events (https://facebook.github.io/react/docs/events.html#event-pooling)
 
-        var movingBack = evt.target.value < this.state.compState; // are we trying to move back or front?
+        var movingBack = evt.currentTarget.value < this.state.compState; // are we trying to move back or front?
         if (!movingBack) return; // prevent moving forward using step counter
 
         var passThroughStepsNotValid = false; // if we are jumping forward, only allow that if inbetween steps are all validated. This flag informs the logic...
@@ -206,7 +206,7 @@ var StepZilla = function (_Component) {
             if (!movingBack) {
               // looks like we are moving forward, 'reduce' a new array of step>validated values we need to check and 'some' that to get a decision on if we should allow moving forward
               passThroughStepsNotValid = _this4.props.steps.reduce(function (a, c, i) {
-                if (i >= _this4.state.compState && i < evt.target.value) {
+                if (i >= _this4.state.compState && i < evt.currentTarget.value) {
                   a.push(c.validated);
                 }
                 return a;
@@ -223,10 +223,10 @@ var StepZilla = function (_Component) {
         }).then(function () {
           // this is like finally(), executes if error no no error
           if (proceed && !passThroughStepsNotValid) {
-            if (evt.target.value === _this4.props.steps.length - 1 && _this4.state.compState === _this4.props.steps.length - 1) {
+            if (evt.currentTarget.value === _this4.props.steps.length - 1 && _this4.state.compState === _this4.props.steps.length - 1) {
               _this4.setNavState(_this4.props.steps.length);
             } else {
-              _this4.setNavState(evt.target.value);
+              _this4.setNavState(evt.currentTarget.value);
             }
           }
         }).catch(function (e) {
