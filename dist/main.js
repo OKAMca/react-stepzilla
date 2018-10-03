@@ -381,7 +381,7 @@ var StepZilla = function (_Component) {
           ),
           _react2.default.createElement(
             'span',
-            { className: isDisabled(i) ? "text-muted" : "" },
+            { className: isDisabled(i) ? "text-muted" : "", style: { opacity: isDisabled(i) ? 0.5 : 1 } },
             _this6.props.steps[i].name
           ),
           _react2.default.createElement('span', { className: 'progtrckr-inner' })
@@ -445,6 +445,7 @@ var StepZilla = function (_Component) {
             {
               className: props.backButtonCls + (!this.state.showPreviousBtn ? " " + this.hiddenCls : ""),
               onClick: function onClick() {
+                if (_this7.props.disableBackButton) return;
                 _this7.previous();
               },
               id: 'prev-button'
@@ -488,7 +489,8 @@ StepZilla.defaultProps = {
   backButtonCls: "btn btn-next btn-primary btn-lg pull-left",
   hocValidationAppliedTo: [],
   isReady: true,
-  disabledSteps: []
+  disabledSteps: [],
+  disableBackButton: false
 };
 
 StepZilla.propTypes = {
@@ -510,5 +512,6 @@ StepZilla.propTypes = {
   hocValidationAppliedTo: _propTypes2.default.array,
   onStepChange: _propTypes2.default.func,
   isReady: _propTypes2.default.bool,
-  disabledSteps: _propTypes2.default.array
+  disabledSteps: _propTypes2.default.array,
+  disableBackButton: _propTypes2.default.bool
 };

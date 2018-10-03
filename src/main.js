@@ -297,7 +297,7 @@ export default class StepZilla extends Component {
         style={{cursor: i < this.state.navState.current && !isDisabled(i) ? "pointer" : "default"}}
       >
         <em>{i+1}</em>
-        <span className={isDisabled(i) ? "text-muted" : ""}>{this.props.steps[i].name}</span>
+        <span className={isDisabled(i) ? "text-muted" : ""} style={{opacity: isDisabled(i) ? 0.5 : 1}}>{this.props.steps[i].name}</span>
         <span className="progtrckr-inner"></span>
       </li>
     ));
@@ -349,7 +349,10 @@ export default class StepZilla extends Component {
         <div className={"footer-buttons" + (!this.props.showNavigation ? " " + this.hiddenCls : "")}>
           <button
             className={props.backButtonCls + (!this.state.showPreviousBtn ? " " + this.hiddenCls : "")}
-            onClick={() => {this.previous()}}
+            onClick={() => {
+              if (this.props.disableBackButton) return;
+              this.previous();
+            }}
             id="prev-button"
           >
             {this.props.backButtonText}
@@ -384,7 +387,8 @@ StepZilla.defaultProps = {
   backButtonCls: "btn btn-next btn-primary btn-lg pull-left",
   hocValidationAppliedTo: [],
   isReady: true,
-  disabledSteps: []
+  disabledSteps: [],
+  disableBackButton: false
 };
 
 StepZilla.propTypes = {
@@ -406,5 +410,6 @@ StepZilla.propTypes = {
   hocValidationAppliedTo: PropTypes.array,
   onStepChange: PropTypes.func,
   isReady: PropTypes.bool,
-  disabledSteps: PropTypes.array
+  disabledSteps: PropTypes.array,
+  disableBackButton: PropTypes.bool
 }
